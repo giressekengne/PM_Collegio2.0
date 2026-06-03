@@ -1,0 +1,31 @@
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h1 class="h2 mb-1">Check-out</h1>
+        <p class="text-muted mb-0">Chiude la prenotazione, libera la camera, aggiorna la fattura</p>
+    </div>
+    <a href="/home" class="btn btn-outline-secondary">&larr; Home</a>
+</div>
+
+{{alert}}
+{{preview}}
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+        <h2 class="h5 mb-3">Calcola preview</h2>
+        <form method="post" action="/checkout" class="row g-3">
+            <input type="hidden" name="action" value="preview">
+            <div class="col-md-6">
+                <label class="form-label">ID prenotazione</label>
+                <input type="number" min="1" name="reservationId" class="form-control" value="{{reservationId}}" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Data check-out</label>
+                <input type="date" name="checkOutDate" class="form-control" value="{{checkOutDate}}" required>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-pmc">Calcola preview</button>
+            </div>
+        </form>
+    </div>
+</div>
+

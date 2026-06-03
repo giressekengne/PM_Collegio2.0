@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>PM_Collegio v3 &mdash; Documentazione web</title>
+<style>
+  :root {
+    --primary: #00a07a;
+    --primary-dark: #007a5c;
+    --accent: #00cc99;
+    --bg: #ffffff;
+    --bg-alt: #f4faf7;
+    --bg-code: #f3f3f3;
+    --text: #1a1a1a;
+    --text-muted: #555;
+    --border: #d0d7de;
+    --success: #2da44e;
+    --warning: #d29922;
+    --danger: #cf222e;
+    --sidebar-w: 280px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Lucida Grande", Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    margin: 0;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  .container { display: flex; min-height: 100vh; }
+
+  aside {
+    width: var(--sidebar-w);
+    background: var(--bg-alt);
+    border-right: 1px solid var(--border);
+    padding: 30px 20px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+  }
+
+  aside h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin: 25px 0 10px 0;
+    font-weight: 600;
+  }
+
+  aside h2:first-child { margin-top: 0; }
+
+  aside ol { list-style: none; padding: 0; margin: 0; counter-reset: section; }
+  aside ol li { counter-increment: section; }
+  aside ol li a::before { content: counter(section) ". "; color: var(--text-muted); font-weight: 500; }
+
+  aside a {
+    display: block;
+    padding: 6px 10px;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.15s;
+  }
+  aside a:hover { background: #d6f0e6; color: var(--primary); }
+
+  main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 50px 60px 100px 60px;
+    max-width: 1040px;
+  }
+
+  .doc-header {
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 25px;
+    margin-bottom: 40px;
+  }
+
+  .doc-header h1 {
+    font-size: 36px;
+    color: var(--primary-dark);
+    margin: 0 0 8px 0;
+    font-weight: 700;
+  }
+
+  .doc-header .subtitle {
+    color: var(--text-muted);
+    font-size: 17px;
+    margin: 0;
+  }
+
+  .doc-header .meta {
+    margin-top: 20px;
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .doc-header .meta span strong { color: var(--text); }
+
+  section { margin-bottom: 50px; scroll-margin-top: 20px; }
+
+  h2 {
+    font-size: 28px;
+    color: var(--primary-dark);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+    margin-top: 0;
+  }
+
+  h3 { font-size: 22px; color: var(--primary-dark); margin-top: 35px; }
+  h4 { font-size: 18px; color: var(--text); margin-top: 25px; }
+
+  p, ul, ol { margin: 12px 0; }
+  ul, ol { padding-left: 25px; }
+
+  a { color: var(--primary); }
+  strong { font-weight: 600; }
+
+  code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, Monaco, monospace;
+    background: var(--bg-code);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: var(--primary-dark);
+  }
+
+  pre {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    padding: 18px 22px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.45;
+    margin: 18px 0;
+  }
+  pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 18px 0;
+    font-size: 15px;
+  }
+  th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; vertical-align: top; }
+  th { background: var(--bg-alt); font-weight: 600; color: var(--primary-dark); }
+  tbody tr:nth-child(even) { background: var(--bg-alt); }
+  td.center { text-align: center; }
+
+  .note, .warning, .danger, .success {
+    border-left: 4px solid;
+    padding: 14px 18px;
+    margin: 20px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .note { background: #e6f6f0; border-color: var(--primary); }
+  .warning { background: #fff8e0; border-color: var(--warning); }
+  .danger { background: #ffeef0; border-color: var(--danger); }
+  .success { background: #e6f4ea; border-color: var(--success); }
+  .note p:first-child, .warning p:first-child, .danger p:first-child, .success p:first-child { margin-top: 0; }
+  .note p:last-child, .warning p:last-child, .danger p:last-child, .success p:last-child { margin-bottom: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .badge-ok { background: var(--success); color: white; }
+  .badge-method { background: var(--primary); color: white; font-family: monospace; letter-spacing: 0; }
+  .badge-method.post { background: #ad6800; }
+  .badge-todo { background: var(--warning); color: white; }
+
+  .ascii-diagram {
+    font-family: monospace;
+    background: var(--bg-code);
+    padding: 18px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    white-space: pre;
+    font-size: 13px;
+    line-height: 1.35;
+    overflow-x: auto;
+  }
+
+  .route-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+  .route-card-header {
+    background: var(--bg-alt);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    font-family: monospace;
+    font-size: 14px;
+  }
+  .route-card-body { padding: 14px 18px; }
+  .route-card-body p { margin: 8px 0; }
+  .route-card-body p:first-child { margin-top: 0; }
+  .route-card-body p:last-child { margin-bottom: 0; }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 25px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 14px;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    aside { position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+    main { margin-left: 0; padding: 30px 25px; }
+    .container { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<aside>
+  <h2>Indice</h2>
+  <ol>
+    <li><a href="#sec1">Introduzione</a></li>
+    <li><a href="#sec2">Architettura</a></li>
+    <li><a href="#sec3">Stack tecnologico</a></li>
+    <li><a href="#sec4">Struttura del package</a></li>
+    <li><a href="#sec5">Avvio del server</a></li>
+    <li><a href="#sec6">Routing ed endpoint</a></li>
+    <li><a href="#sec7">Componenti core</a></li>
+    <li><a href="#sec8">Handler in dettaglio</a></li>
+    <li><a href="#sec9">Template e placeholder</a></li>
+    <li><a href="#sec10">CSS e stile visivo</a></li>
+    <li><a href="#sec11">Sessione e sicurezza</a></li>
+    <li><a href="#sec12">Limiti noti</a></li>
+    <li><a href="#sec13">Estensione</a></li>
+  </ol>
+</aside>
+
+<main>
+
+<div class="doc-header">
+  <h1>PM_Collegio v3 &middot; package <code>web</code></h1>
+  <p class="subtitle">Documentazione tecnica del secondo front-end (HTML + Bootstrap) servito da un mini server HTTP embedded</p>
+  <div class="meta">
+    <span><strong>Modulo :</strong> web</span>
+    <span><strong>Progetto :</strong> PM_Collegio v3</span>
+    <span><strong>Ateneo :</strong> Universit&agrave; di Pavia</span>
+    <span><strong>Autore :</strong> Giresse Kengne</span>
+  </div>
+</div>
+
+<!-- =============================================================== -->
+<section id="sec1">
+  <h2>1. Introduzione</h2>
+
+  <p>Il package <code>it.collegio.web</code> aggiunge a PM_Collegio v3 un <strong>secondo front-end</strong> oltre alle 15 JFrame Swing del package <code>views</code>. Si tratta di un'<strong>interfaccia web</strong> servita da un mini server HTTP embedded, pensata per dimostrare empiricamente i vantaggi dell'architettura MVC + DAO introdotta in v3.</p>
+
+  <p>L'idea di fondo &egrave; semplice: se la separazione tra View, Controller, DAO e DTO &egrave; ben fatta, deve essere possibile <strong>scrivere un secondo front-end senza toccare il dominio applicativo</strong>. Il package <code>web</code> &egrave; la prova pratica di questa affermazione.</p>
+
+  <div class="note">
+    <p><strong>Cosa <u>non</u> &egrave; questo package :</strong></p>
+    <ul>
+      <li>Non &egrave; un framework MVC web (no Spring, no Servlet API, no Jakarta EE).</li>
+      <li>Non sostituisce le JFrame: le due interfacce coesistono e usano lo stesso DB.</li>
+      <li>Non &egrave; pensato per la produzione: &egrave; un prototipo didattico monoutente.</li>
+    </ul>
+  </div>
+
+  <h3>1.1 Obiettivi del package</h3>
+  <ol>
+    <li><strong>Dimostrare la riusabilit&agrave; dei Controller :</strong> mostrare che lo stesso Controller pu&ograve; servire sia la view Swing che la view HTML, senza modifiche.</li>
+    <li><strong>Dimostrare la riusabilit&agrave; dei DAO :</strong> nessuna query SQL nuova, tutti gli accessi al DB passano dagli stessi DAO della v3 Swing.</li>
+    <li><strong>Validare il refactor v1 &rarr; v3 :</strong> in v1 (architettura monolitica) questo lavoro avrebbe richiesto la riscrittura di tutta la logica applicativa, per ogni nuovo front-end. In v3 il front-end &egrave; sostituibile.</li>
+    <li><strong>Offrire un'esperienza moderna :</strong> interfaccia responsive Bootstrap 5, accessibile da qualunque browser sulla stessa macchina.</li>
+  </ol>
+
+  <h3>1.2 Numeri del lavoro</h3>
+  <p>Per dare un'idea di quanto sia stata ridotta la duplicazione del codice:</p>
+  <table>
+    <thead>
+      <tr><th>Metrica</th><th>Valore</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Nuove query SQL</td><td>0</td></tr>
+      <tr><td>Nuove classi DAO</td><td>0</td></tr>
+      <tr><td>Nuove classi Controller</td><td>0</td></tr>
+      <tr><td>Metodi aggiunti ai Controller esistenti</td><td>1 (<code>RegistrationController.getIndirizzi()</code>)</td></tr>
+      <tr><td>Logiche di business duplicate</td><td>0</td></tr>
+      <tr><td>Transazioni multi-step riscritte</td><td>0</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec2">
+  <h2>2. Architettura</h2>
+
+  <p>Il flusso di una richiesta dal browser fino al DB &egrave; quello che segue. Da notare che i passaggi 4 e 5 sono <em>esattamente</em> gli stessi della view Swing.</p>
+
+  <div class="ascii-diagram">
+[Browser]                                                           Bootstrap 5
+    |
+    |  GET /rooms
+    v
+[HttpServer (porta 8080)]
+    |  routing su context "/rooms"
+    v
+[RoomsHandler]  ============== specifico di web
+    |  controller.getRooms()
+    v
+[ManageRoomController]  ====== riusato 1:1 dalla v3 Swing
+    |  roomDao.getAll()
+    v
+[RoomDao]  =================== riusato 1:1 dalla v3 Swing
+    |  QueryContainer.queryRoomGetAll
+    v
+[DatabaseConnection]
+    |  JDBC -> MySQL
+    v
+[Database PM_Collegio]
+    |
+    |  ResultSet -> List&lt;Room&gt;
+    |
+    +--------- ritorna l'oggetto fino al RoomsHandler ----+
+                                                          |
+                                                          v
+                                          [HtmlRenderer] mescola
+                                          List&lt;Room&gt; con il template
+                                          rooms.html, sostituisce
+                                          {{rows}} con i &lt;tr&gt; HTML
+                                                          |
+                                                          v
+                                          HTTP 200 + text/html
+                                                          |
+                                                          v
+                                                       [Browser]
+  </div>
+
+  <h3>2.1 I tre livelli del package</h3>
+
+  <table>
+    <thead>
+      <tr><th>Livello</th><th>Compito</th><th>File coinvolti</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Trasporto</strong></td>
+        <td>Apre la porta HTTP, dispatcha le URL sui giusti handler, parsea form e cookie.</td>
+        <td><code>WebServer</code>, <code>HandlerUtils</code>, <code>StaticHandler</code></td>
+      </tr>
+      <tr>
+        <td><strong>Sessione</strong></td>
+        <td>Verifica che l'utente sia loggato (rileggendo <code>SessionContext</code>), emette e cancella il cookie di sessione web.</td>
+        <td><code>WebSession</code></td>
+      </tr>
+      <tr>
+        <td><strong>Presentazione</strong></td>
+        <td>Per ogni endpoint chiama il Controller corretto e compone l'HTML iniettando i dati nei template.</td>
+        <td>15 handler in <code>handlers/</code>, 17 template in <code>templates/</code>, <code>HtmlRenderer</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.2 Cosa &egrave; stato volutamente tenuto fuori</h3>
+  <p>Il package &egrave; rimasto deliberatamente minimale per non snaturare il progetto universitario. In particolare:</p>
+  <ul>
+    <li><strong>Nessun framework esterno Java</strong> (Spring, Servlet, Jersey, ecc.). Si usa solo <code>com.sun.net.httpserver</code>, gi&agrave; presente nel JDK.</li>
+    <li><strong>Nessun template engine</strong> (Thymeleaf, Freemarker, JSP). C'&egrave; un mini-renderer di una decina di righe che fa solo sostituzione di placeholder.</li>
+    <li><strong>Nessun database aggiuntivo</strong> per le sessioni web: il cookie HTTP punta logicamente al solito <code>SessionContext</code> in memoria.</li>
+    <li><strong>Nessun build aggiuntivo</strong>: i file HTML e CSS vivono sotto <code>src/</code> e vengono copiati in <code>build/classes/</code> da Ant standard di NetBeans.</li>
+  </ul>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec3">
+  <h2>3. Stack tecnologico</h2>
+
+  <h3>3.1 Lato server (Java)</h3>
+  <table>
+    <thead>
+      <tr><th>Componente</th><th>Versione/Origine</th><th>Uso</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>com.sun.net.httpserver.HttpServer</code></td><td>JDK 8+</td><td>Server HTTP embedded, una sola classe.</td></tr>
+      <tr><td><code>HttpHandler</code></td><td>JDK 8+</td><td>Interfaccia implementata da ogni handler.</td></tr>
+      <tr><td><code>Executors.newFixedThreadPool(4)</code></td><td>JDK</td><td>Pool di thread che serve le richieste.</td></tr>
+      <tr><td><code>java.awt.Desktop</code></td><td>JDK</td><td>Apre automaticamente il browser allo startup.</td></tr>
+      <tr><td><code>java.net.URLDecoder / URLEncoder</code></td><td>JDK</td><td>Parsing dei form e dei parametri di query string.</td></tr>
+    </tbody>
+  </table>
+
+  <p>Niente dipendenze esterne Java. Il <code>build.xml</code> di NetBeans non &egrave; stato modificato.</p>
+
+  <h3>3.2 Lato client (HTML/CSS/JS)</h3>
+  <table>
+    <thead>
+      <tr><th>Componente</th><th>Versione</th><th>Origine</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Bootstrap CSS</strong></td><td>5.3.3</td><td>CDN jsdelivr</td></tr>
+      <tr><td><strong>Bootstrap JS bundle</strong></td><td>5.3.3</td><td>CDN jsdelivr (caricato solo dove servono modali/collapse)</td></tr>
+      <tr><td><strong>CSS personalizzato</strong></td><td>n/a</td><td><code>/static/style.css</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warning">
+    <p><strong>Connessione internet richiesta :</strong> i CSS e JS di Bootstrap sono caricati via CDN. Senza connessione l'interfaccia perde stili e i modali (paga fattura, modifica prenotazione) non funzionano. Per un uso completamente offline si pu&ograve; scaricare Bootstrap sotto <code>/static/</code> e cambiare il <code>href</code> in <code>layout.html</code>.</p>
+  </div>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec4">
+  <h2>4. Struttura del package</h2>
+
+  <p>Tutti i file vivono sotto <code>src/it/collegio/web/</code>. L'organizzazione &egrave; la seguente :</p>
+
+  <div class="ascii-diagram">
+web/
+&#9500;&#9472;&#9472; WebServer.java              avvia HttpServer e registra le route
+&#9500;&#9472;&#9472; HtmlRenderer.java           legge template + sostituisce {{placeholder}}
+&#9500;&#9472;&#9472; WebSession.java             cookie + verifica login
+&#9474;
+&#9500;&#9472;&#9472; handlers/
+&#9474;   &#9500;&#9472;&#9472; HandlerUtils.java       utility: sendHtml, redirect, parseForm
+&#9474;   &#9500;&#9472;&#9472; LoginHandler.java
+&#9474;   &#9500;&#9472;&#9472; RegistrationHandler.java
+&#9474;   &#9500;&#9472;&#9472; PasswordResetHandler.java
+&#9474;   &#9500;&#9472;&#9472; LogoutHandler.java
+&#9474;   &#9500;&#9472;&#9472; HomeHandler.java
+&#9474;   &#9500;&#9472;&#9472; RoomsHandler.java
+&#9474;   &#9500;&#9472;&#9472; ManageUserHandler.java
+&#9474;   &#9500;&#9472;&#9472; ManageTenantHandler.java
+&#9474;   &#9500;&#9472;&#9472; ManageRiservationHandler.java
+&#9474;   &#9500;&#9472;&#9472; CheckInHandler.java
+&#9474;   &#9500;&#9472;&#9472; CheckOutHandler.java
+&#9474;   &#9500;&#9472;&#9472; FatturaHandler.java
+&#9474;   &#9500;&#9472;&#9472; GestioneFattureHandler.java
+&#9474;   &#9500;&#9472;&#9472; LogsHandler.java
+&#9474;   &#9500;&#9472;&#9472; LoadingHandler.java
+&#9474;   &#9500;&#9472;&#9472; Loading1Handler.java
+&#9474;   &#9492;&#9472;&#9472; StaticHandler.java      serve i file statici (CSS, immagini)
+&#9474;
+&#9500;&#9472;&#9472; templates/                   risorse classpath, lette via getResourceAsStream
+&#9474;   &#9500;&#9472;&#9472; layout.html             scheletro con navbar, slot {{content}}
+&#9474;   &#9500;&#9472;&#9472; login.html, registration.html, password_step1.html, password_step2.html
+&#9474;   &#9500;&#9472;&#9472; home.html, rooms.html, manage_user.html, manage_tenant.html
+&#9474;   &#9500;&#9472;&#9472; manage_reservation.html, checkin.html, checkout.html
+&#9474;   &#9500;&#9472;&#9472; fattura.html, gestione_fatture.html, logs.html
+&#9474;   &#9492;&#9472;&#9472; loading.html, loading1.html
+&#9474;
+&#9492;&#9472;&#9472; static/
+    &#9492;&#9472;&#9472; style.css                palette verde PMC, tile della home, card
+  </div>
+
+  <p>Il file <code>nbproject/project.properties</code> contiene <code>build.classes.excludes=**/*.java,**/*.form</code>, quindi i <code>.html</code> e i <code>.css</code> vengono automaticamente copiati nella cartella delle classi compilate, dove sono raggiungibili come <em>classpath resources</em>.</p>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec5">
+  <h2>5. Avvio del server</h2>
+
+  <h3>5.1 Prerequisiti</h3>
+  <ul>
+    <li>JDK 8 o superiore (lo stesso del resto di v3).</li>
+    <li>MySQL configurato come per la v3 Swing (vedi <code>DatabaseConnection.java</code>).</li>
+    <li>Connessione internet per caricare Bootstrap dal CDN (oppure copia locale sotto <code>static/</code>).</li>
+    <li>Porta TCP <code>8080</code> libera sulla macchina.</li>
+  </ul>
+
+  <h3>5.2 Lancio da NetBeans</h3>
+  <ol>
+    <li>Aprire il progetto <code>PM_Collegiov3</code> in NetBeans.</li>
+    <li>Nel <em>Projects</em> espandere <code>it.collegio.web</code> e fare tasto destro su <code>WebServer.java</code>.</li>
+    <li>Selezionare <strong>Run File</strong> (Shift + F6).</li>
+    <li>Si apre automaticamente il browser predefinito su <code>http://localhost:8080/</code>.</li>
+  </ol>
+
+  <p>Per chiudere il server &egrave; sufficiente premere il quadratino rosso di <em>Stop</em> nella console di NetBeans.</p>
+
+  <h3>5.3 Lancio da riga di comando</h3>
+  <p>Dopo <em>Clean and Build</em> &egrave; sufficiente lanciare la classe direttamente:</p>
+<pre><code>java -cp build/classes;lib/mysql-connector-j.jar it.collegio.web.WebServer</code></pre>
+
+  <p>L'output atteso sulla console &egrave;:</p>
+<pre><code>PM_Collegio v3 HTML view in ascolto su http://localhost:8080/</code></pre>
+
+  <div class="note">
+    <p>Il server <strong>non blocca la JFrame Swing</strong>. In teoria si possono tenere aperte entrambe le UI sullo stesso DB. Attenzione per&ograve;: condividono <code>SessionContext</code> in memoria, quindi se l'utente di Swing fa logout, anche la sessione web cade.</p>
+  </div>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec6">
+  <h2>6. Routing ed endpoint</h2>
+
+  <p>Tutte le route registrate da <code>WebServer.main()</code>:</p>
+
+  <table>
+    <thead>
+      <tr><th style="width:200px">Route</th><th style="width:80px">Metodi</th><th>Handler</th><th>Auth ?</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>/</code></td><td><span class="badge badge-method">GET</span></td><td><code>LoadingHandler</code></td><td>no</td></tr>
+      <tr><td><code>/loading1</code></td><td><span class="badge badge-method">GET</span></td><td><code>Loading1Handler</code></td><td>no</td></tr>
+      <tr><td><code>/login</code></td><td><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span></td><td><code>LoginHandler</code></td><td>no</td></tr>
+      <tr><td><code>/registration</code></td><td><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span></td><td><code>RegistrationHandler</code></td><td>no</td></tr>
+      <tr><td><code>/password</code></td><td><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span></td><td><code>PasswordResetHandler</code></td><td>no</td></tr>
+      <tr><td><code>/logout</code></td><td><span class="badge badge-method">GET</span></td><td><code>LogoutHandler</code></td><td>s&igrave;</td></tr>
+      <tr><td><code>/home</code></td><td><span class="badge badge-method">GET</span></td><td><code>HomeHandler</code></td><td>s&igrave;</td></tr>
+      <tr><td><code>/rooms</code></td><td><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span></td><td><code>RoomsHandler</code></td><td>s&igrave; (AS, AC)</td></tr>
+      <tr><td><code>/users</code></td><td><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span></td><td><code>ManageUserHandler</code></td><td>s&igrave;</td></tr>
+      <tr><td><code>/tenants</code></td><td><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span></td><td><code>ManageTenantHandler</code></td><td>s&igrave; (AS)</td></tr>
+      <tr><td><code>/reservation</code></td><td><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span></td><td><code>ManageRiservationHandler</code></td><td>s&igrave;</td></tr>
+      <tr><td><code>/checkin</code></td><td><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span></td><td><code>CheckInHandler</code></td><td>s&igrave;</td></tr>
+      <tr><td><code>/checkout</code></td><td><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span></td><td><code>CheckOutHandler</code></td><td>s&igrave;</td></tr>
+      <tr><td><code>/fattura</code></td><td><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span></td><td><code>FatturaHandler</code></td><td>s&igrave;</td></tr>
+      <tr><td><code>/gestione-fatture</code></td><td><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span></td><td><code>GestioneFattureHandler</code></td><td>s&igrave;</td></tr>
+      <tr><td><code>/logs</code></td><td><span class="badge badge-method">GET</span></td><td><code>LogsHandler</code></td><td>s&igrave; (AS, AC)</td></tr>
+      <tr><td><code>/static/*</code></td><td><span class="badge badge-method">GET</span></td><td><code>StaticHandler</code></td><td>no</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.1 Convenzione GET / POST</h3>
+  <p>Tutti gli handler che modificano dati seguono il <strong>pattern Post-Redirect-Get</strong> oppure rispondono direttamente con la pagina aggiornata pi&ugrave; un alert di esito. Le GET sono sempre <em>idempotenti</em> (puro fetch di lettura).</p>
+
+  <h3>6.2 Parametri di query string supportati</h3>
+  <p>Alcuni endpoint accettano parametri opzionali in query string:</p>
+
+  <table>
+    <thead>
+      <tr><th>Endpoint</th><th>Parametro</th><th>Uso</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>/rooms</code></td><td><code>?edit=42</code></td><td>Pre-popola il form di modifica per la camera 42.</td></tr>
+      <tr><td><code>/users</code></td><td><code>?edit=XXX001MARIO</code></td><td>Pre-popola il form con i dati dell'utente XXX001MARIO.</td></tr>
+      <tr><td><code>/users</code></td><td><code>?searchEmail=mario@x</code></td><td>Cerca un utente per email ed evidenzia la riga.</td></tr>
+      <tr><td><code>/tenants</code></td><td><code>?edit=3</code></td><td>Pre-popola il form di modifica per il committente 3.</td></tr>
+      <tr><td><code>/checkin</code></td><td><code>?searchEmail=...&amp;prezzo=...</code></td><td>Pre-popola il form check-in con i dati del cliente e filtra le camere.</td></tr>
+      <tr><td><code>/fattura</code></td><td><code>?id=18</code></td><td>Mostra il dettaglio della fattura 18.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec7">
+  <h2>7. Componenti core</h2>
+
+  <h3>7.1 <code>WebServer</code></h3>
+  <p>Punto di ingresso del package. Crea un <code>HttpServer</code> su porta <code>8080</code>, registra tutte le route, gli associa il pool di thread e prova ad aprire il browser con <code>Desktop.browse()</code>.</p>
+
+<pre><code>HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
+server.createContext("/login", new LoginHandler());
+// ... altre 15 route
+server.setExecutor(Executors.newFixedThreadPool(4));
+server.start();</code></pre>
+
+  <p>Una scelta progettuale: il <code>setExecutor</code> usa un pool fisso di 4 thread. Questo basta per un demo locale e impedisce comportamenti imprevedibili dovuti a creazione illimitata di thread.</p>
+
+  <h3>7.2 <code>HtmlRenderer</code></h3>
+  <p>&Egrave; il "template engine" minimo del package. Espone tre metodi:</p>
+
+  <table>
+    <thead>
+      <tr><th>Metodo</th><th>Uso</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>render(template, values)</code></td>
+        <td>Legge un file HTML dal classpath e sostituisce ogni occorrenza di <code>{{chiave}}</code> con il valore corrispondente nella mappa.</td>
+      </tr>
+      <tr>
+        <td><code>renderInLayout(content, title, contentValues, layoutValues)</code></td>
+        <td>Renderizza prima il template di contenuto, poi lo inietta dentro <code>layout.html</code> al posto di <code>{{content}}</code>.</td>
+      </tr>
+      <tr>
+        <td><code>escape(s)</code></td>
+        <td>Escape HTML standard (<code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>"</code>, <code>'</code>). Da usare per ogni dato letto dal DB prima di iniettarlo in HTML.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warning">
+    <p><strong>Limitazione voluta :</strong> <code>HtmlRenderer</code> non supporta cicli ({{#each ...}}) n&eacute; condizioni ({{#if ...}}). Per i cicli (es. le righe di una tabella) si compone la stringa nel handler in Java e la si inietta come un unico placeholder, ad esempio <code>{{rows}}</code>. Questa scelta tiene il renderer sotto le 50 righe ed evita di importare un template engine completo.</p>
+  </div>
+
+  <h3>7.3 <code>WebSession</code></h3>
+  <p>Si occupa di tre cose, in poche righe:</p>
+  <ul>
+    <li>Leggere il cookie <code>PM_SID</code> dalla richiesta.</li>
+    <li>Emettere un cookie di sessione al primo login (UUID random).</li>
+    <li>Cancellare il cookie al logout.</li>
+  </ul>
+
+  <p>La verifica del "sono loggato ?" &egrave; delegata a <code>SessionContext.isLoggedIn()</code> della v3 Swing. Questo significa che il cookie web e la sessione applicativa <em>non sono associati uno a uno</em>: il cookie &egrave; pi&ugrave; che altro un marker, la sessione vera vive in memoria.</p>
+
+  <h3>7.4 <code>HandlerUtils</code></h3>
+  <p>Utility statiche comuni a tutti gli handler:</p>
+  <ul>
+    <li><code>sendHtml(ex, html)</code> &mdash; manda la risposta con <code>Content-Type: text/html; charset=utf-8</code>.</li>
+    <li><code>redirect(ex, location)</code> &mdash; HTTP 302 con header <code>Location</code>.</li>
+    <li><code>notFound(ex)</code> &mdash; HTTP 404 testuale.</li>
+    <li><code>parseForm(ex)</code> &mdash; legge il body <code>application/x-www-form-urlencoded</code> e lo torna come <code>Map&lt;String,String&gt;</code>.</li>
+  </ul>
+
+  <h3>7.5 <code>StaticHandler</code></h3>
+  <p>Serve qualsiasi file sotto <code>/it/collegio/web/static/</code> via <code>getResourceAsStream</code>. Aggiunge il giusto <code>Content-Type</code> in base all'estensione (css, js, png, jpg, svg). Se la risorsa non esiste, 404.</p>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec8">
+  <h2>8. Handler in dettaglio</h2>
+
+  <p>Ogni handler segue lo stesso pattern minimale:</p>
+  <ol>
+    <li>Verificare l'autenticazione (tranne login, registration, password, loading).</li>
+    <li>Se POST: parsare il form, chiamare il Controller, comporre l'alert di esito.</li>
+    <li>Caricare i dati da mostrare via Controller.</li>
+    <li>Mappare i dati nel template e rispondere HTML.</li>
+  </ol>
+
+  <h3>8.1 <code>LoginHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span> &nbsp; <code>/login</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>LoginController.login(email, password)</code></p>
+      <p><strong>Template :</strong> <code>login.html</code> (pagina full-screen senza navbar)</p>
+      <p><strong>Flusso :</strong> il GET mostra il form; il POST chiama <code>LoginController.login()</code>, che a sua volta valida le credenziali, scrive in <code>AccessLog</code>, crea una sessione (token UUID + scadenza 8h) e popola <code>SessionContext</code>. Su successo, <code>WebSession.issueCookie()</code> + redirect a <code>/home</code>.</p>
+    </div>
+  </div>
+
+  <h3>8.2 <code>RegistrationHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span> &nbsp; <code>/registration</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>RegistrationController.registra(...)</code>, <code>.getIndirizzi()</code></p>
+      <p><strong>Template :</strong> <code>registration.html</code></p>
+      <p><strong>Note :</strong> in GET popola due select &mdash; via (da <code>getIndirizzi()</code>) e domanda di sicurezza (lista hardcoded di 5 valori, identici a <code>questionComboBox</code> di RegistrationView Swing). In POST chiama <code>registra()</code>; se ok l'account viene creato con stato <code>ATTESA</code>.</p>
+    </div>
+  </div>
+
+  <h3>8.3 <code>PasswordResetHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span> &nbsp; <code>/password</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>PasswordResetController.getDomandaSicurezza()</code>, <code>.resetPassword()</code></p>
+      <p><strong>Template :</strong> <code>password_step1.html</code> (chiede email), <code>password_step2.html</code> (mostra domanda + chiede risposta + nuova password)</p>
+      <p><strong>Flusso :</strong> due step, esattamente come la PassWordView Swing. Step 1: l'utente inserisce l'email, viene mostrata la sua domanda di sicurezza. Step 2: l'utente risponde e indica la nuova password; se la risposta &egrave; corretta, la password &egrave; aggiornata via <code>UserDao.updatePasswordByEmail()</code>.</p>
+    </div>
+  </div>
+
+  <h3>8.4 <code>HomeHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> &nbsp; <code>/home</code></div>
+    <div class="route-card-body">
+      <p><strong>Template :</strong> <code>home.html</code></p>
+      <p><strong>Note :</strong> replica esatta di <code>HomeView.configureButtonsForRole()</code> ma in HTML. Le 8 tile (Manage Room, Manage Reservation, Manage User, Manage Tenant, Check-in, Check-out, Gestione fatture, Access Logs) sono mostrate o nascoste in base al <code>SessionContext.roleType</code>.</p>
+    </div>
+  </div>
+
+  <h3>8.5 <code>RoomsHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span> &nbsp; <code>/rooms</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>ManageRoomController</code></p>
+      <p><strong>Template :</strong> <code>rooms.html</code></p>
+      <p><strong>Operazioni supportate :</strong></p>
+      <ul>
+        <li>GET = lista camere + form per Add (id auto da <code>getNextId()</code>)</li>
+        <li>GET <code>?edit=ID</code> = form precompilato per Update</li>
+        <li>POST <code>action=add</code> = <code>addRoom()</code></li>
+        <li>POST <code>action=update</code> = <code>updateRoom()</code> (bloccato lato Controller se la camera &egrave; <code>OCCUPATA</code>)</li>
+        <li>POST <code>action=delete</code> = <code>deleteRoom()</code> con conferma JS</li>
+      </ul>
+      <p><strong>Accesso :</strong> solo ruoli AS e AC.</p>
+    </div>
+  </div>
+
+  <h3>8.6 <code>ManageUserHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span> &nbsp; <code>/users</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>ManageUserController</code></p>
+      <p><strong>Template :</strong> <code>manage_user.html</code></p>
+      <p><strong>Operazioni :</strong> GET = lista filtrata per ruolo (per il ruolo U, solo se stesso); GET <code>?searchEmail=...</code> = ricerca con highlight e form pre-popolato; POST con <code>action=add | update | delete</code>.</p>
+      <p><strong>Nota :</strong> l'email del form di update &egrave; <code>readonly</code> perch&eacute; identifica univocamente l'utente da modificare lato Controller.</p>
+    </div>
+  </div>
+
+  <h3>8.7 <code>ManageTenantHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span> &nbsp; <code>/tenants</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>ManageTenantController</code></p>
+      <p><strong>Template :</strong> <code>manage_tenant.html</code></p>
+      <p><strong>Operazioni :</strong> GET = lista committenti; GET <code>?edit=ID</code> = form Update; POST <code>action=add | update</code>. Le select "Gestore" e "Indirizzo" sono popolate da <code>getAdminEmails()</code> e <code>getIndirizzi()</code>.</p>
+      <p><strong>Accesso :</strong> solo AS (come da <code>HomeView.configureButtonsForRole</code>).</p>
+    </div>
+  </div>
+
+  <h3>8.8 <code>ManageRiservationHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span> &nbsp; <code>/reservation</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>ReservationController</code></p>
+      <p><strong>Template :</strong> <code>manage_reservation.html</code></p>
+      <p><strong>Operazioni :</strong> GET = lista filtrata per ruolo (ruolo U vede solo le proprie prenotazioni); POST = <code>aggiornaConStorico()</code>, transazione UPDATE Reservation + INSERT StoricoPrenotazioni in un solo commit.</p>
+      <p><strong>UI :</strong> riga &laquo;Modifica&raquo; cliccabile, apre un sotto-form Bootstrap collapse con le date e le note editabili. Per il ruolo U, il form di modifica &egrave; nascosto.</p>
+    </div>
+  </div>
+
+  <h3>8.9 <code>CheckInHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span> &nbsp; <code>/checkin</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>CheckInController</code></p>
+      <p><strong>Template :</strong> <code>checkin.html</code></p>
+      <p><strong>Flusso a 2 step :</strong></p>
+      <ol>
+        <li>POST <code>action=search</code> &rarr; redirect GET con <code>?searchEmail=&amp;prezzo=</code> &rarr; cerca l'utente per email (<code>cercaUserPerEmail</code>) e filtra le camere per prezzo (<code>getRoomPerPrezzo</code>)</li>
+        <li>POST <code>action=book</code> &rarr; <code>prenota(...)</code>, transazione INSERT Reservation + INSERT Fattura + UPDATE Room=OCCUPATA</li>
+      </ol>
+      <p>Il bottone di conferma del check-in si abilita <strong>solo dopo</strong> che la ricerca utente ha avuto successo, per evitare prenotazioni su email inesistenti.</p>
+    </div>
+  </div>
+
+  <h3>8.10 <code>CheckOutHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span> &nbsp; <code>/checkout</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>CheckOutController</code></p>
+      <p><strong>Template :</strong> <code>checkout.html</code></p>
+      <p><strong>Flusso a 2 step :</strong></p>
+      <ol>
+        <li>POST <code>action=preview</code> &rarr; calcola e mostra <code>CheckoutPreview</code> (giorni, totale).</li>
+        <li>POST <code>action=confirm</code> &rarr; <code>eseguiCheckout()</code>, transazione UPDATE Reservation + UPDATE Room + upsert Fattura.</li>
+      </ol>
+      <p>Il totale e i giorni sono <strong>sempre ricalcolati lato Controller</strong>, mai presi dal form: lo stesso comportamento difensivo della CheckOutView Swing.</p>
+    </div>
+  </div>
+
+  <h3>8.11 <code>FatturaHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span> &nbsp; <code>/fattura?id=N</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>FatturaController</code></p>
+      <p><strong>Template :</strong> <code>fattura.html</code></p>
+      <p><strong>Operazioni :</strong></p>
+      <ul>
+        <li>GET <code>?id=N</code> = visualizza il dettaglio della fattura N (DTO <code>FatturaDettaglio</code>, join con Reservation + User + Room)</li>
+        <li>POST <code>action=paga</code> + <code>metodoId</code> = <code>paga(...)</code> (INSERT Pagamento + UPDATE stato)</li>
+        <li>POST <code>action=annulla</code> = <code>annulla(...)</code> (marca la fattura come NON_PAGATA)</li>
+      </ul>
+      <p>I bottoni "Paga" e "Annulla" sono visibili solo se <code>FatturaController.isPagabile()</code> ritorna <code>true</code> (stato <code>IN_ATTESA</code> oppure <code>NON_PAGATA</code>).</p>
+    </div>
+  </div>
+
+  <h3>8.12 <code>GestioneFattureHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> <span class="badge badge-method post">POST</span> &nbsp; <code>/gestione-fatture</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>FatturaController</code></p>
+      <p><strong>Template :</strong> <code>gestione_fatture.html</code></p>
+      <p><strong>Operazioni :</strong> lista filtrata per ruolo (ruolo U vede solo le sue fatture); per ogni riga pagabile c'&egrave; un bottone "Paga" che apre una modale con la select dei metodi di pagamento e un bottone "Annulla" inline.</p>
+    </div>
+  </div>
+
+  <h3>8.13 <code>LogsHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> &nbsp; <code>/logs</code></div>
+    <div class="route-card-body">
+      <p><strong>DAO usato :</strong> <code>AccessLogDao.getDettagli()</code> (DTO <code>AccessLogDettaglio</code>)</p>
+      <p><strong>Template :</strong> <code>logs.html</code></p>
+      <p>Tabella di audit di tutti gli accessi: utente, ruolo, IP, login_time, logout_time. Se <code>logout_time</code> &egrave; null mostra un badge "sessione aperta".</p>
+      <p><strong>Accesso :</strong> solo AS e AC.</p>
+    </div>
+  </div>
+
+  <h3>8.14 <code>LogoutHandler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> &nbsp; <code>/logout</code></div>
+    <div class="route-card-body">
+      <p><strong>Controller :</strong> <code>LoginController.registraLogout()</code></p>
+      <p>Chiama <code>registraLogout()</code> che fa UPDATE su <code>AccessLog.logout_time</code>, invalida la <code>sessions.token</code> e pulisce <code>SessionContext</code>. Poi cancella il cookie web e redirige a <code>/login</code>.</p>
+    </div>
+  </div>
+
+  <h3>8.15 <code>LoadingHandler</code> e <code>Loading1Handler</code></h3>
+  <div class="route-card">
+    <div class="route-card-header"><span class="badge badge-method">GET</span> &nbsp; <code>/</code> e <code>/loading1</code></div>
+    <div class="route-card-body">
+      <p><strong>Template :</strong> <code>loading.html</code> (welcome con bottone "Entra"), <code>loading1.html</code> (barra di progresso CSS pura + <code>&lt;meta http-equiv="refresh"&gt;</code> a 3 secondi verso <code>/login</code>).</p>
+      <p>Sono l'equivalente dei due splash JFrame della v3 Swing. Non hanno logica server-side.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec9">
+  <h2>9. Template e placeholder</h2>
+
+  <p>Tutti i template HTML vivono sotto <code>src/it/collegio/web/templates/</code> e sono letti dal classpath via <code>HtmlRenderer.loadTemplate()</code>.</p>
+
+  <h3>9.1 Convenzione layout / contenuto</h3>
+  <p>Il file <code>layout.html</code> contiene la struttura comune (DOCTYPE, navbar, footer) con due placeholder principali:</p>
+  <ul>
+    <li><code>{{title}}</code> &mdash; il titolo della pagina (visibile nel tab del browser).</li>
+    <li><code>{{content}}</code> &mdash; lo slot in cui viene iniettato il template specifico della pagina.</li>
+    <li><code>{{user}}</code> &mdash; nome dell'utente loggato, visibile nella navbar.</li>
+  </ul>
+
+  <p>Le pagine senza navbar (login, registration, password, loading, loading1) <strong>non</strong> usano <code>renderInLayout</code> ma <code>render</code> diretto, perch&eacute; sono pagine "full screen" complete di <code>&lt;!doctype&gt;</code>.</p>
+
+  <h3>9.2 Placeholder per pagina</h3>
+
+  <table>
+    <thead>
+      <tr><th>Template</th><th>Placeholder principali</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>layout.html</code></td><td><code>{{title}}</code>, <code>{{content}}</code>, <code>{{user}}</code></td></tr>
+      <tr><td><code>login.html</code></td><td><code>{{title}}</code>, <code>{{error}}</code></td></tr>
+      <tr><td><code>registration.html</code></td><td><code>{{nome}}</code>, <code>{{cognome}}</code>, <code>{{email}}</code>, <code>{{telefono}}</code>, <code>{{viaOptions}}</code>, <code>{{domandaOptions}}</code>, <code>{{alert}}</code></td></tr>
+      <tr><td><code>password_step1.html</code></td><td><code>{{email}}</code>, <code>{{alert}}</code></td></tr>
+      <tr><td><code>password_step2.html</code></td><td><code>{{email}}</code>, <code>{{domanda}}</code>, <code>{{alert}}</code></td></tr>
+      <tr><td><code>home.html</code></td><td><code>{{userName}}</code>, <code>{{roleType}}</code>, <code>{{tiles}}</code></td></tr>
+      <tr><td><code>rooms.html</code></td><td><code>{{rows}}</code>, <code>{{count}}</code>, <code>{{alert}}</code>, <code>{{formBlock}}</code></td></tr>
+      <tr><td><code>manage_user.html</code></td><td><code>{{rows}}</code>, <code>{{count}}</code>, <code>{{alert}}</code>, <code>{{searchValue}}</code>, <code>{{formBlock}}</code>, <code>{{filterNote}}</code></td></tr>
+      <tr><td><code>manage_tenant.html</code></td><td><code>{{rows}}</code>, <code>{{count}}</code>, <code>{{alert}}</code>, <code>{{formBlock}}</code></td></tr>
+      <tr><td><code>manage_reservation.html</code></td><td><code>{{rows}}</code>, <code>{{count}}</code>, <code>{{alert}}</code>, <code>{{filterNote}}</code></td></tr>
+      <tr><td><code>checkin.html</code></td><td><code>{{alert}}</code>, <code>{{roomOptions}}</code>, <code>{{searchEmail}}</code>, <code>{{prezzoFiltro}}</code>, <code>{{userBlock}}</code>, <code>{{formDisabled}}</code>, <code>{{availableCount}}</code></td></tr>
+      <tr><td><code>checkout.html</code></td><td><code>{{alert}}</code>, <code>{{preview}}</code>, <code>{{reservationId}}</code>, <code>{{checkOutDate}}</code></td></tr>
+      <tr><td><code>fattura.html</code></td><td><code>{{body}}</code></td></tr>
+      <tr><td><code>gestione_fatture.html</code></td><td><code>{{rows}}</code>, <code>{{count}}</code>, <code>{{alert}}</code>, <code>{{filterNote}}</code></td></tr>
+      <tr><td><code>logs.html</code></td><td><code>{{rows}}</code>, <code>{{count}}</code></td></tr>
+      <tr><td><code>loading.html</code></td><td><code>{{title}}</code></td></tr>
+      <tr><td><code>loading1.html</code></td><td><code>{{title}}</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>9.3 Composizione dei placeholder complessi</h3>
+
+  <p>Quando un placeholder rappresenta una <strong>lista</strong> (es. <code>{{rows}}</code>), l'handler costruisce la stringa HTML con un <code>StringBuilder</code> e la inietta:</p>
+
+<pre><code>StringBuilder rows = new StringBuilder();
+for (Room r : rooms) {
+    rows.append("&lt;tr&gt;")
+        .append("&lt;td&gt;R").append(String.format("%04d", r.getId())).append("&lt;/td&gt;")
+        // ...
+        .append("&lt;/tr&gt;");
+}
+values.put("rows", rows.toString());</code></pre>
+
+  <p>Per gli HTML iniettati con <code>{{rows}}</code> o simili, <strong>non</strong> si fa escape: il contenuto &egrave; HTML strutturale costruito dall'handler. Il valore degli attributi e i campi DB sono per&ograve; sempre passati attraverso <code>HtmlRenderer.escape()</code>.</p>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec10">
+  <h2>10. CSS e stile visivo</h2>
+
+  <h3>10.1 Palette</h3>
+  <p>Il CSS personalizzato in <code>static/style.css</code> definisce una palette ispirata al verde dei <code>JButton</code> della v3 Swing (<code>new Color(0, 204, 153)</code>):</p>
+
+  <table>
+    <thead>
+      <tr><th>Variabile CSS</th><th>Valore</th><th>Uso</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>--pmc-primary</code></td><td>#00cc99</td><td>verde principale</td></tr>
+      <tr><td><code>--pmc-primary-dark</code></td><td>#00a07a</td><td>hover, gradients</td></tr>
+      <tr><td><code>--pmc-primary-soft</code></td><td>#d6f7ec</td><td>sfondi alert PMC</td></tr>
+      <tr><td><code>--pmc-bg</code></td><td>#f6f8fa</td><td>sfondo pagina</td></tr>
+      <tr><td><code>--pmc-ink</code></td><td>#1f2d3d</td><td>colore testo</td></tr>
+    </tbody>
+  </table>
+
+  <h3>10.2 Componenti custom</h3>
+  <table>
+    <thead>
+      <tr><th>Classe</th><th>Descrizione</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>.bg-pmc</code></td><td>Sfondo navbar a gradient verde scuro-chiaro.</td></tr>
+      <tr><td><code>.btn-pmc</code></td><td>Bottone primario verde PMC.</td></tr>
+      <tr><td><code>.btn-outline-pmc</code></td><td>Variante outline.</td></tr>
+      <tr><td><code>.bg-pmc-soft</code> / <code>.text-pmc</code></td><td>Sfondo chiaro e testo verde scuro.</td></tr>
+      <tr><td><code>.tile</code></td><td>Card cliccabile della home con bordo sinistro colorato.</td></tr>
+      <tr><td><code>.tile-grid</code></td><td>Grid responsive auto-fill min 260px per le tile della home.</td></tr>
+      <tr><td><code>.brand-logo</code></td><td>Box quadrato 64&times;64 con le iniziali "PM" e gradient.</td></tr>
+      <tr><td><code>.login-bg</code></td><td>Sfondo gradient radiale usato dalle pagine senza navbar.</td></tr>
+    </tbody>
+  </table>
+
+  <p>Tutto il resto &egrave; Bootstrap 5 standard: griglia, card, table, modal, badge, form-control, form-select.</p>
+
+  <h3>10.3 Stampa</h3>
+  <p>La pagina <code>fattura.html</code> ha un bottone "Stampa" che chiama <code>window.print()</code>. La fattura &egrave; stata pensata per essere stampabile cos&igrave; com'&egrave;: i bottoni di azione sono nello stesso colore della pagina e si "perdono" su stampa B/N.</p>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec11">
+  <h2>11. Sessione e sicurezza</h2>
+
+  <h3>11.1 Come funziona il login</h3>
+  <ol>
+    <li>L'utente invia il form a <code>POST /login</code>.</li>
+    <li>Il <code>LoginHandler</code> chiama <code>LoginController.login(email, password)</code>.</li>
+    <li>Se le credenziali sono valide, il Controller (in una sola operazione):
+      <ul>
+        <li>Inserisce un record in <code>AccessLog</code> via <code>AccessLogDao.insertLog()</code> e ne salva il <code>log_id</code>.</li>
+        <li>Genera un token UUID a 64 caratteri e crea un record in <code>sessions</code> con scadenza +8h.</li>
+        <li>Popola <code>SessionContext</code> con utente, ruolo, committente, log_id, session_id, token.</li>
+      </ul>
+    </li>
+    <li>Il <code>LoginHandler</code> emette un cookie <code>PM_SID</code> con un secondo UUID (per il browser) e redirige a <code>/home</code>.</li>
+  </ol>
+
+  <p>Su ogni richiesta successiva il handler chiama <code>WebSession.isLoggedIn()</code>, che ritorna <code>true</code> se <code>SessionContext.userCounter != null &amp;&amp; SessionContext.sessionToken != null</code>.</p>
+
+  <div class="danger">
+    <p><strong>Limite importante :</strong> <code>SessionContext</code> usa campi <code>static</code>. Va benissimo per la JFrame (un utente alla volta), ma per un server multi-client il primo utente che si logga "vince" e gli altri ereditano la sua sessione. Per questo motivo il package web &egrave; pensato come <strong>demo monoutente da localhost</strong>. Per un uso multi-utente reale, andrebbe sostituito <code>SessionContext</code> con una mappa <code>Map&lt;String, SessionData&gt;</code> indicizzata dal cookie token.</p>
+  </div>
+
+  <h3>11.2 Filtro per ruolo</h3>
+  <p>Le restrizioni per ruolo applicate dagli handler sono:</p>
+  <table>
+    <thead>
+      <tr><th>Endpoint</th><th>Ruoli ammessi</th><th>Implementato in</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>/rooms</code></td><td>AS, AC</td><td>handler (redirect a <code>/home</code> se non ammesso)</td></tr>
+      <tr><td><code>/tenants</code></td><td>AS</td><td>handler</td></tr>
+      <tr><td><code>/logs</code></td><td>AS, AC</td><td>handler</td></tr>
+      <tr><td><code>/users</code></td><td>tutti, ma U vede solo se stesso</td><td>Controller (<code>getUsersPerRuolo</code>)</td></tr>
+      <tr><td><code>/reservation</code></td><td>tutti, ma U vede solo le proprie</td><td>Controller (<code>getDettagliPerRuolo</code>)</td></tr>
+      <tr><td><code>/gestione-fatture</code></td><td>tutti, ma U vede solo le proprie</td><td>Controller (<code>getDettagliPerRuolo</code>)</td></tr>
+    </tbody>
+  </table>
+
+  <p>I filtri sui dati personali (ruolo U vede solo se stesso) sono <strong>sempre lato Controller</strong>, mai lato handler. Questa &egrave; una scelta architetturale precisa: se domani aggiungiamo un terzo front-end (es. REST API), eredita gratis lo stesso filtro.</p>
+
+  <h3>11.3 Escape HTML</h3>
+  <p>Tutti i dati testuali letti dal DB e iniettati in HTML passano attraverso <code>HtmlRenderer.escape()</code>, che neutralizza <code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>"</code> e <code>'</code>. Questo evita injection di markup malizioso nel caso un nome utente, un'email o una nota contengano caratteri speciali.</p>
+
+  <h3>11.4 Protezione password</h3>
+  <p>Le password sono passate al Controller in chiaro nel body POST. <strong>Non c'&egrave; HTTPS</strong> (il server &egrave; in HTTP puro su localhost). Per la consegna universitaria su singola macchina questo &egrave; accettabile, ma in produzione la cosa minima sarebbe attivare TLS via reverse proxy.</p>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec12">
+  <h2>12. Limiti noti</h2>
+
+  <table>
+    <thead>
+      <tr><th>Limite</th><th>Impatto</th><th>Soluzione possibile</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>SessionContext</code> con campi static</td>
+        <td>Solo un utente alla volta puo' essere loggato in tutto il processo Java.</td>
+        <td>Sostituire con una <code>Map&lt;token, SessionData&gt;</code> e leggere il token dal cookie ad ogni richiesta.</td>
+      </tr>
+      <tr>
+        <td>Validazioni live (regex live email/telefono)</td>
+        <td>Mancano i feedback rosso/verde in tempo reale che ha la versione Swing.</td>
+        <td>Aggiungere un piccolo file JavaScript con event listener sui campi.</td>
+      </tr>
+      <tr>
+        <td>Bootstrap caricato da CDN</td>
+        <td>Senza connessione internet l'interfaccia perde gli stili.</td>
+        <td>Scaricare Bootstrap sotto <code>static/</code> e cambiare il path del CDN nel <code>layout.html</code>.</td>
+      </tr>
+      <tr>
+        <td>HTTP in chiaro</td>
+        <td>Le password viaggiano in chiaro tra browser e server.</td>
+        <td>Accettabile in localhost. In rete servirebbe un reverse proxy con TLS (nginx, Caddy).</td>
+      </tr>
+      <tr>
+        <td>Nessuna paginazione</td>
+        <td>Tabelle con migliaia di record diventano lente da renderizzare.</td>
+        <td>Aggiungere <code>?page=&amp;size=</code> agli handler e <code>LIMIT/OFFSET</code> nelle query del DAO.</td>
+      </tr>
+      <tr>
+        <td>Mini-renderer senza if / for</td>
+        <td>Per ogni lista bisogna comporre l'HTML in Java a mano.</td>
+        <td>Accettabile a questo livello, oppure migrare a Thymeleaf o Freemarker.</td>
+      </tr>
+      <tr>
+        <td>Nessun protezione CSRF</td>
+        <td>Un sito esterno potrebbe far compiere POST a un utente loggato.</td>
+        <td>Generare un token CSRF nel cookie, validarlo su ogni POST.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- =============================================================== -->
+<section id="sec13">
+  <h2>13. Estensione</h2>
+
+  <p>Aggiungere una nuova view HTML al package richiede 3 passi.</p>
+
+  <h3>13.1 Step 1 &mdash; creare il template</h3>
+  <p>Aggiungere un file <code>src/it/collegio/web/templates/mio_template.html</code>. Pu&ograve; essere un frammento (sar&agrave; iniettato in <code>layout.html</code> via <code>renderInLayout</code>) o una pagina full-screen completa.</p>
+
+  <h3>13.2 Step 2 &mdash; creare l'handler</h3>
+  <p>Una classe in <code>handlers/</code> che implementa <code>HttpHandler</code>. Lo scheletro tipico:</p>
+
+<pre><code>public class MioHandler implements HttpHandler {
+
+    private final MioController controller = new MioController();
+
+    @Override
+    public void handle(HttpExchange ex) throws IOException {
+        if (!WebSession.isLoggedIn()) {
+            HandlerUtils.redirect(ex, "/login");
+            return;
+        }
+
+        // 1. (se POST) parsa il form, chiama il Controller
+        String alert = "";
+        if ("POST".equalsIgnoreCase(ex.getRequestMethod())) {
+            Map&lt;String, String&gt; f = HandlerUtils.parseForm(ex);
+            // ... chiamata al Controller
+        }
+
+        // 2. carica i dati da mostrare
+        List&lt;Cosa&gt; dati = controller.getDati();
+
+        // 3. componi le righe HTML
+        StringBuilder rows = new StringBuilder();
+        for (Cosa c : dati) { /* ... */ }
+
+        // 4. renderizza
+        Map&lt;String, String&gt; values = new HashMap&lt;&gt;();
+        values.put("rows", rows.toString());
+        values.put("alert", alert);
+
+        Map&lt;String, String&gt; layout = new HashMap&lt;&gt;();
+        layout.put("user", HtmlRenderer.escape(/* nome utente */));
+
+        HandlerUtils.sendHtml(ex,
+            HtmlRenderer.renderInLayout("mio_template.html", "Titolo", values, layout));
+    }
+}</code></pre>
+
+  <h3>13.3 Step 3 &mdash; registrare la route</h3>
+  <p>In <code>WebServer.main()</code> aggiungere una riga:</p>
+<pre><code>server.createContext("/mio-endpoint", new MioHandler());</code></pre>
+
+  <p>Niente di pi&ugrave;. Rilanciando il server l'endpoint &egrave; subito disponibile.</p>
+
+  <h3>13.4 Regole da rispettare</h3>
+  <ul>
+    <li>L'handler <strong>non</strong> deve mai aprire connessioni JDBC dirette. Tutto passa dal Controller.</li>
+    <li>L'handler <strong>non</strong> deve mai contenere validazioni di business: vanno nel Controller e/o nel DAO.</li>
+    <li>L'handler <strong>deve</strong> chiamare <code>HtmlRenderer.escape()</code> su ogni dato testuale letto dal DB prima di iniettarlo nel template.</li>
+    <li>Per ogni endpoint che modifica dati, usare <code>POST</code> (mai <code>GET</code> con effetti collaterali).</li>
+    <li>I path delle route si scrivono in minuscolo, con kebab-case se necessario (es. <code>/gestione-fatture</code>).</li>
+  </ul>
+</section>
+
+<footer>
+  PM_Collegio v3 &middot; documentazione del package <code>web</code> &middot; Giresse Kengne &middot; Universit&agrave; di Pavia
+</footer>
+
+</main>
+</div>
+</body>
+</html>

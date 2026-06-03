@@ -1,0 +1,34 @@
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h1 class="h2 mb-1">Prenotazioni</h1>
+        <p class="text-muted mb-0">Totale: <strong>{{count}}</strong> &middot; {{filterNote}}</p>
+    </div>
+    <a href="/home" class="btn btn-outline-secondary">&larr; Home</a>
+</div>
+
+{{alert}}
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Camera</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Giorni</th>
+                    <th>Totale</th>
+                    <th>Stato</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{rows}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

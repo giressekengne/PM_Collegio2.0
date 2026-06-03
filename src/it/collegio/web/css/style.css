@@ -1,0 +1,166 @@
+/* ============================================================
+   PM Collegio v2 - vista HTML
+   Palette ispirata al verde (0,204,153) delle JButton delle JFrame v1/v2.
+   ============================================================ */
+
+:root {
+    --pmc-primary:        #00cc99;
+    --pmc-primary-dark:   #00a07a;
+    --pmc-primary-soft:   #d6f7ec;
+    --pmc-bg:             #f6f8fa;
+    --pmc-ink:            #1f2d3d;
+}
+
+body {
+    background: var(--pmc-bg);
+    color: var(--pmc-ink);
+    font-family: "Segoe UI", "Lucida Grande", system-ui, sans-serif;
+}
+
+/* ---------- Navbar ---------- */
+.bg-pmc {
+    background: linear-gradient(90deg, var(--pmc-primary-dark), var(--pmc-primary));
+}
+
+.brand-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    margin-right: .35rem;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.25);
+    vertical-align: middle;
+}
+
+/* ---------- Bottoni primari ---------- */
+.btn-pmc {
+    background: var(--pmc-primary);
+    border-color: var(--pmc-primary);
+    color: #fff;
+    font-weight: 600;
+}
+.btn-pmc:hover,
+.btn-pmc:focus {
+    background: var(--pmc-primary-dark);
+    border-color: var(--pmc-primary-dark);
+    color: #fff;
+}
+
+.btn-outline-pmc {
+    border-color: var(--pmc-primary);
+    color: var(--pmc-primary-dark);
+    background: transparent;
+    font-weight: 600;
+}
+.btn-outline-pmc:hover,
+.btn-outline-pmc:focus {
+    background: var(--pmc-primary);
+    border-color: var(--pmc-primary);
+    color: #fff;
+}
+
+.bg-pmc-soft  { background: var(--pmc-primary-soft) !important; }
+.text-pmc     { color: var(--pmc-primary-dark) !important; }
+
+/* ---------- Login page ---------- */
+.login-bg {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(0,204,153,.25), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(0,160,122,.20), transparent 45%),
+        var(--pmc-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-wrapper {
+    width: 100%;
+    max-width: 460px;
+    padding: 2rem 1rem;
+}
+
+.login-card {
+    border: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.brand-logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--pmc-primary), var(--pmc-primary-dark));
+    position: relative;
+    box-shadow: 0 8px 24px rgba(0,204,153,.35);
+}
+.brand-logo::after {
+    content: "PM";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+/* ---------- Home tile grid ---------- */
+.tile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+}
+
+.tile {
+    display: block;
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.5rem 1.25rem;
+    text-decoration: none;
+    color: var(--pmc-ink);
+    border: 1px solid rgba(0,0,0,.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,.04);
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    position: relative;
+}
+.tile::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--pmc-primary);
+    border-radius: 14px 0 0 14px;
+    opacity: .6;
+}
+.tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0,0,0,.08);
+    border-color: var(--pmc-primary);
+    color: var(--pmc-ink);
+}
+.tile h3 {
+    font-size: 1.1rem;
+    margin-bottom: .35rem;
+    font-weight: 700;
+}
+.tile p {
+    margin: 0;
+    color: #6b7785;
+    font-size: .9rem;
+}
+
+/* ---------- Tabelle ---------- */
+.table thead th {
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #6b7785;
+}
+
+.card {
+    border-radius: 14px;
+}

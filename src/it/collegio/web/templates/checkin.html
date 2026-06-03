@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h1 class="h2 mb-1">Check-in</h1>
+        <p class="text-muted mb-0">Apre una prenotazione e una fattura in stato IN_ATTESA</p>
+    </div>
+    <a href="/home" class="btn btn-outline-secondary">&larr; Home</a>
+</div>
+
+{{alert}}
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <h2 class="h6 mb-3">1. Ricerca cliente e filtro camere</h2>
+                <form method="post" action="/checkin" class="row g-2 align-items-end">
+                    <input type="hidden" name="action" value="search">
+                    <div class="col-md-7">
+                        <label class="form-label small mb-1">Email cliente</label>
+                        <input type="email" name="email" class="form-control" value="{{searchEmail}}"
+                               placeholder="cliente@dominio.it" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small mb-1">Filtro prezzo</label>
+                        <input type="number" step="0.01" min="0" name="prezzoFiltro" class="form-control"
+                               value="{{prezzoFiltro}}" placeholder="opz.">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-pmc w-100">Cerca</button>
+                    </div>
+                </form>
+                <div class="mt-3">
+                    {{userBlock}}
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h2 class="h6 mb-3">2. Conferma prenotazione</h2>
+                <form method="post" action="/checkin" class="row g-3">
+                    <input type="hidden" name="action" value="book">
+                    <input type="hidden" name="email" value="{{searchEmail}}">
+                    <div class="col-md-7">
+                        <label class="form-label">Camera disponibile</label>
+                        <select name="roomId" class="form-select" required {{formDisabled}}>
+                            {{roomOptions}}
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label">Data check-in</label>
+                        <input type="date" name="checkInDate" class="form-control" required {{formDisabled}}>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Note</label>
+                        <input type="text" name="note" class="form-control" placeholder="Note opzionali" {{formDisabled}}>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-pmc btn-lg w-100" {{formDisabled}}>Conferma check-in</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card border-0 bg-pmc-soft">
+            <div class="card-body p-4">
+                <h2 class="h6 text-pmc mb-3">Riepilogo</h2>
+                <p class="small mb-0">
+                    <strong>{{availableCount}}</strong> camere disponibili dopo i filtri attivi.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
