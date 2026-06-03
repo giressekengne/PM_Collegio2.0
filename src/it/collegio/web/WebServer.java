@@ -67,7 +67,7 @@ public class WebServer {
         server.start();
 
         String url = "http://localhost:" + PORT + "/";
-        System.out.println("PM_Collegio v2 HTML view in ascolto su " + url);
+        System.out.println("PM_Collegio v3 HTML view in ascolto su " + url);
 
         try {
             if (Desktop.isDesktopSupported()) {

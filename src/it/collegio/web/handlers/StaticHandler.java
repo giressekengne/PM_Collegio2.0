@@ -9,11 +9,11 @@ import java.io.InputStream;
 
 /**
  * Serve risorse statiche (CSS, immagini) dal classpath sotto
- * /it/collegio/viewsHtml/static/.
+ * /it/collegio/web/css/.
  */
 public class StaticHandler implements HttpHandler {
 
-    private static final String BASE = "/it/collegio/viewsHtml/static/";
+    private static final String BASE = "/it/collegio/web/css/";
 
     @Override
     public void handle(HttpExchange ex) throws IOException {

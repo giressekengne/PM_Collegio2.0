@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public final class HtmlRenderer {
 
-    private static final String TEMPLATES_PATH = "/it/collegio/viewsHtml/templates/";
+    private static final String TEMPLATES_PATH = "/it/collegio/web/templates/";
 
     private HtmlRenderer() {
     }
