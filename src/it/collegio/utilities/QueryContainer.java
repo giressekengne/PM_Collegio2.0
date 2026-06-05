@@ -118,7 +118,7 @@ public final class QueryContainer {
 
   public static String queryGetFatturaDettaglio =
       "SELECT F.fattura_id, F.reservation_id, U.nome, R.numero_stanza, " +
-      "F.importo, F.data_emissione, F.stato " +
+      "F.importo, F.data_emissione, F.stato, Res.status " +
       "FROM Fattura F " +
       "JOIN Reservation Res ON Res.reservation_id = F.reservation_id " +
       "JOIN User U ON U.user_counter = Res.user_id " +
@@ -127,7 +127,7 @@ public final class QueryContainer {
 
   public static String queryGetFattureDettagliate =
       "SELECT F.fattura_id, F.reservation_id, U.nome, R.numero_stanza, " +
-      "F.importo, F.data_emissione, F.stato " +
+      "F.importo, F.data_emissione, F.stato, Res.status " +
       "FROM Fattura F " +
       "JOIN Reservation Res ON Res.reservation_id = F.reservation_id " +
       "JOIN User U ON U.user_counter = Res.user_id " +
@@ -218,7 +218,7 @@ public final class QueryContainer {
 
   public static String queryGetFattureDettagliateByUser =
       "SELECT F.fattura_id, F.reservation_id, U.nome, R.numero_stanza, " +
-      "F.importo, F.data_emissione, F.stato " +
+      "F.importo, F.data_emissione, F.stato, Res.status " +
       "FROM Fattura F " +
       "JOIN Reservation Res ON Res.reservation_id = F.reservation_id " +
       "JOIN User U ON U.user_counter = Res.user_id " +
