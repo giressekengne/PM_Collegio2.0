@@ -229,6 +229,22 @@
     main { margin-left: 0; padding: 30px 25px; }
     .container { flex-direction: column; }
   }
+
+  @media print {
+    aside { display: none; }
+    .container { display: block; }
+    main { margin-left: 0; max-width: 100%; padding: 0; }
+    body { font-size: 12pt; line-height: 1.45; }
+    h2 { font-size: 18pt; page-break-after: avoid; }
+    h3 { font-size: 14pt; page-break-after: avoid; }
+    h4 { font-size: 12pt; page-break-after: avoid; }
+    section { page-break-inside: auto; margin-bottom: 25px; }
+    pre, table, .ascii-diagram, .note, .warning, .danger, .success, .route-card { page-break-inside: avoid; }
+    a { color: var(--text); text-decoration: none; }
+    pre { background: #f4f4f4; color: #1a1a1a; border: 1px solid var(--border); }
+    pre code { color: inherit; }
+    @page { margin: 1.6cm 1.4cm; }
+  }
 </style>
 </head>
 <body>
@@ -270,7 +286,7 @@
 <section id="sec1">
   <h2>1. Introduzione</h2>
 
-  <p>Il package <code>it.collegio.web</code> aggiunge a PM_Collegio v3 un <strong>secondo front-end</strong> oltre alle 15 JFrame Swing del package <code>views</code>. Si tratta di un'<strong>interfaccia web</strong> servita da un mini server HTTP embedded, pensata per dimostrare empiricamente i vantaggi dell'architettura MVC + DAO introdotta in v3.</p>
+  <p>Il package <code>it.collegio.web</code> aggiunge a PM_Collegio v3 un <strong>secondo front-end</strong> oltre alle 15 JFrame Swing del package <code>views</code>. Si tratta di un'<strong>interfaccia web</strong> servita da un mini server HTTP embedded, pensata per dimostrare empiricamente i vantaggi dell'architettura MVC + DAO introdotta in v2.</p>
 
   <p>L'idea di fondo &egrave; semplice: se la separazione tra View, Controller, DAO e DTO &egrave; ben fatta, deve essere possibile <strong>scrivere un secondo front-end senza toccare il dominio applicativo</strong>. Il package <code>web</code> &egrave; la prova pratica di questa affermazione.</p>
 
@@ -286,8 +302,8 @@
   <h3>1.1 Obiettivi del package</h3>
   <ol>
     <li><strong>Dimostrare la riusabilit&agrave; dei Controller :</strong> mostrare che lo stesso Controller pu&ograve; servire sia la view Swing che la view HTML, senza modifiche.</li>
-    <li><strong>Dimostrare la riusabilit&agrave; dei DAO :</strong> nessuna query SQL nuova, tutti gli accessi al DB passano dagli stessi DAO della v3 Swing.</li>
-    <li><strong>Validare il refactor v1 &rarr; v3 :</strong> in v1 (architettura monolitica) questo lavoro avrebbe richiesto la riscrittura di tutta la logica applicativa, per ogni nuovo front-end. In v3 il front-end &egrave; sostituibile.</li>
+    <li><strong>Dimostrare la riusabilit&agrave; dei DAO :</strong> nessuna query SQL nuova, tutti gli accessi al DB passano dagli stessi DAO della v2 Swing.</li>
+    <li><strong>Validare il refactor v1 &rarr; v2 :</strong> in v1 (architettura monolitica) questo lavoro avrebbe richiesto la riscrittura di tutta la logica applicativa, per ogni nuovo front-end. In v3 il front-end &egrave; sostituibile.</li>
     <li><strong>Offrire un'esperienza moderna :</strong> interfaccia responsive Bootstrap 5, accessibile da qualunque browser sulla stessa macchina.</li>
   </ol>
 
