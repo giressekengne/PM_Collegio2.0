@@ -15,20 +15,14 @@ L'applicazione offre un'interfaccia grafica completa che guida l'operatore attra
 registrazione degli ospiti, assegnazione delle camere, check-in e check-out, generazione e gestione delle fatture, 
 e supervisione amministrativa con controllo degli accessi basato su ruolo.
 
-La versione 2 rappresenta il refactor della versione 1 (monolitica) verso una architettura a strati MVC + DAO + DTO.
-Obiettivi sono: Separare nettamente UI, logica applicativa e accesso ai dati
-Centralizzare le query SQL in un unico punto (QueryContainer )
-Eliminare la duplicazione di codice di connessione DB sparso in ogni view
-Introdurre transazioni esplicite per operazioni atomiche (CheckIn, CheckOut, audit)
-Applicare validazioni e calcoli server-side (controller) invece che inline nelle view
+La versione 3 rappresenta il refactor della versione 1 (monolitica) verso una architettura a strati MVC + DAO + DTO, 
+e aggiunge un secondo front-end oltre alle 15 JFrame Swing del package views. 
+Si tratta di un'interfaccia web servita da un mini server HTTP embedded, pensata per dimostrare empiricamente i vantaggi dell'architettura MVC + DAO introdotta in v2.
+L'idea di fondo è semplice: se la separazione tra View, Controller, DAO e DTO è ben fatta, deve essere possibile scrivere un secondo front-end senza toccare il dominio applicativo. Il package web è la prova pratica di questa affermazione.
 
- Regole architetturali
-1. La View non parla mai al DB. Chiede al Controller, che chiede al DAO.
-2. Il DAO non conosce il dominio applicativo. Riceve e ritorna oggetti, esegue query, basta.
-3. Il Controller orchestra. Conosce sia il DAO che gli oggetti applicativi (SessionContext, ecc.), può
-gestire transazioni cross-DAO.
-4. Le query SQL stanno in 
-QueryContainer 
-, non sparse nei DAO.
-5. I DTO sono read-only, usati quando un'operazione restituisce dati joinati da più tabelle.
+Obiettivi sono: Dimostrare la riusabilità dei Controller 
+mostrare che lo stesso Controller può servire sia la view Swing che la view HTML, senza modifiche.
+Dimostrare la riusabilità dei DAO : nessuna query SQL nuova, tutti gli accessi al DB passano dagli stessi DAO della v2 Swing.
+Validare il refactor v1 → v2 : in v1 (architettura monolitica) questo lavoro avrebbe richiesto la riscrittura di tutta la logica applicativa, per ogni nuovo front-end. In v3 il front-end è sostituibile.
+Offrire un'esperienza moderna : interfaccia responsive Bootstrap 5, accessibile da qualunque browser sulla stessa macchina.
 
