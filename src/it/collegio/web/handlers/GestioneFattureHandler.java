@@ -67,10 +67,11 @@ public class GestioneFattureHandler implements HttpHandler {
 
         StringBuilder rows = new StringBuilder();
         if (list == null || list.isEmpty()) {
-            rows.append("<tr><td colspan=\"7\" class=\"text-center text-muted\">Nessuna fattura</td></tr>");
+            rows.append("<tr><td colspan=\"8\" class=\"text-center text-muted\">Nessuna fattura</td></tr>");
         } else {
             for (FatturaDettaglio f : list) {
-                boolean pagabile = controller.isPagabile(f.getStato());
+                boolean pagabile = controller.isPagabile(f.getStato())
+                                && isReservationPagabile(f.getReservationStato());
                 rows.append("<tr>")
                     .append("<td><code>F").append(String.format("%04d", f.getFatturaId())).append("</code></td>")
                     .append("<td>").append(HtmlRenderer.escape(f.getClienteNome())).append("</td>")
@@ -78,6 +79,7 @@ public class GestioneFattureHandler implements HttpHandler {
                     .append("<td>").append(String.format("%.2f", f.getImporto())).append(" €</td>")
                     .append("<td>").append(formatDate(f.getDataEmissione())).append("</td>")
                     .append("<td>").append(stateBadge(f.getStato())).append("</td>")
+                    .append("<td>").append(reservationBadge(f.getReservationStato())).append("</td>")
                     .append("<td class=\"text-end\">")
                     .append("<a href=\"/fattura?id=").append(f.getFatturaId())
                     .append("\" class=\"btn btn-sm btn-outline-secondary me-1\">Vedi</a>");
@@ -151,5 +153,22 @@ public class GestioneFattureHandler implements HttpHandler {
 
     private int parseInt(String s) {
         try { return Integer.parseInt(s); } catch (NumberFormatException e) { return 0; }
+    }
+
+    /** Una fattura e' pagabile solo se la prenotazione e' chiusa (completata o cancellata). */
+    private static boolean isReservationPagabile(String reservationStato) {
+        return "completata".equalsIgnoreCase(reservationStato)
+            || "cancellata".equalsIgnoreCase(reservationStato);
+    }
+
+    /** Badge colorato per lo stato della prenotazione. */
+    private String reservationBadge(String stato) {
+        if (stato == null || stato.isEmpty()) return "<span class=\"badge bg-secondary\">?</span>";
+        switch (stato.toLowerCase()) {
+            case "attiva":     return "<span class=\"badge bg-success\">Attiva</span>";
+            case "completata": return "<span class=\"badge bg-primary\">Completata</span>";
+            case "cancellata": return "<span class=\"badge bg-danger\">Cancellata</span>";
+            default:           return "<span class=\"badge bg-secondary\">" + HtmlRenderer.escape(stato) + "</span>";
+        }
     }
 }

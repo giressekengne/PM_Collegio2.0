@@ -191,6 +191,7 @@ public class FatturaDao {
             d.setDataEmissione(data.toLocalDateTime());
         }
         d.setStato(FatturaStatus.fromDb(rs.getString("stato")));
+        d.setReservationStato(rs.getString("status"));
         return d;
     }
 

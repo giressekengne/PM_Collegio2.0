@@ -12,6 +12,7 @@ public class FatturaDettaglio {
     private double importo;
     private LocalDateTime dataEmissione;
     private FatturaStatus stato;
+    private String reservationStato;
 
     public FatturaDettaglio() {
     }
@@ -70,5 +71,13 @@ public class FatturaDettaglio {
 
     public void setStato(FatturaStatus stato) {
         this.stato = stato;
+    }
+
+    public String getReservationStato() {
+        return reservationStato;
+    }
+
+    public void setReservationStato(String reservationStato) {
+        this.reservationStato = reservationStato;
     }
 }

@@ -62,7 +62,9 @@ public class FatturaHandler implements HttpHandler {
         if (f == null) {
             body = "<div class=\"alert alert-warning\">Fattura " + id + " non trovata</div>";
         } else {
-            body = renderInvoice(f, controller.isPagabile(f.getStato()));
+            boolean fatturaPagabile = controller.isPagabile(f.getStato());
+            boolean reservationPagabile = isReservationPagabile(f.getReservationStato());
+            body = renderInvoice(f, fatturaPagabile && reservationPagabile);
         }
 
         Map<String, String> values = new HashMap<>();
@@ -178,6 +180,12 @@ public class FatturaHandler implements HttpHandler {
 
     private int parseInt(String s) {
         try { return Integer.parseInt(s); } catch (NumberFormatException e) { return 0; }
+    }
+
+    /** Una fattura e' pagabile solo se la prenotazione e' chiusa (completata o cancellata). */
+    private static boolean isReservationPagabile(String reservationStato) {
+        return "completata".equalsIgnoreCase(reservationStato)
+            || "cancellata".equalsIgnoreCase(reservationStato);
     }
 
     // Suppress unused warning
